@@ -1,0 +1,21 @@
+//Question 1: enumerate the given integer digits using recursion. eg-> 234 gives two three four
+
+#include<bits/stdc++.h>
+using namespace std;
+
+void enumf(int n,string arr[]){
+    if(n<=0){
+        return;
+    }
+    int temp=n%10;
+    enumf(n/10,arr);
+    cout<<arr[temp]<<" ";
+    
+}
+
+int main(){
+    
+    string arr[10]={"zero","one","two","three","four","five","six","seven","eight","nine"};
+    enumf(431,arr);
+    
+}
