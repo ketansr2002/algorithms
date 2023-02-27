@@ -1,21 +1,85 @@
 //Question 1: enumerate the given integer digits using recursion. eg-> 234 gives two three four
 
-#include<bits/stdc++.h>
-using namespace std;
+        #include<bits/stdc++.h>
+        using namespace std;
 
-void enumf(int n,string arr[]){
-    if(n<=0){
-        return;
-    }
-    int temp=n%10;
-    enumf(n/10,arr);
-    cout<<arr[temp]<<" ";
-    
-}
+        void enumf(int n,string arr[]){
+            if(n<=0){
+                return;
+            }
+            int temp=n%10;
+            enumf(n/10,arr);
+            cout<<arr[temp]<<" ";
 
-int main(){
-    
-    string arr[10]={"zero","one","two","three","four","five","six","seven","eight","nine"};
-    enumf(431,arr);
-    
-}
+        }
+
+        int main(){
+
+            string arr[10]={"zero","one","two","three","four","five","six","seven","eight","nine"};
+            enumf(431,arr);
+
+        }
+
+
+***********************************************************************************************
+
+
+//find all the possible subset of an array 
+// here we will apply logic of picking and not picking
+
+        void powerSet(vector<int> &nums, vector<vector<int>>&ans,vector<int>&temp,int i,int n){
+                if(i>n){
+                    ans.push_back(temp);
+                    return;
+                }
+
+                //take
+                temp.push_back(nums[i]);
+                powerSet(nums,ans,temp,i+1,n);
+
+                //not take
+                temp.pop_back();
+                powerSet(nums,ans,temp,i+1,n);
+
+            }
+            vector<vector<int>> subsets(vector<int>& nums) {
+                vector<vector<int>>ans;
+                vector<int>temp;
+                int n=nums.size()-1;
+
+                powerSet(nums,ans,temp,0,n);
+
+                return ans;
+            }
+        
+
+
+***************************************************************************************
+        
+       
+//find all the combination in an array that gives the certain target sum , here a nukmber can be repeated but ans should be unique sets
+//here also we will use pick and not pic concept but here we will take one elements multiple times
+//recursive function to get all combinations 
+            void combination(vector<int>& candidates, int target,int idx,int n,vector<vector<int>> &ans,vector<int>&temp){
+                if(idx==n){
+                    if(target==0){
+                        ans.push_back(temp);
+                    }
+                    return;
+                
+                if(candidates[idx]<=target){
+                    temp.push_back(candidates[idx]);
+                    combination(candidates,target-candidates[idx],idx,n,ans,temp);
+                    temp.pop_back();
+                }
+
+                combination(candidates,target,idx+1,n,ans,temp);
+            }
+            vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+                vector<vector<int>> ans;
+                int idx=0,n=candidates.size();
+                vector<int>temp;
+                combination(candidates,target,idx,n,ans,temp);
+                return ans;
+            }
+        
